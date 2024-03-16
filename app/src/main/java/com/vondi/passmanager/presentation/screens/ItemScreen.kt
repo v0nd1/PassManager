@@ -1,10 +1,11 @@
-package com.vondi.passmanager
+package com.vondi.passmanager.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.vondi.passmanager.domain.event.ItemEvent
+import com.vondi.passmanager.domain.model.ItemState
+import com.vondi.passmanager.presentation.components.ItemCard
 
 @Composable
 fun ItemScreen(
@@ -36,27 +40,36 @@ fun ItemScreen(
         }
 
     ) {
+        if (state.isAddingItem){
+            AddItemDialog(
+                state = state,
+                onEvent = onEvent
+            )
+        }
         LazyColumn(
             contentPadding = it,
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(15.dp)
         ){
             items(state.items){
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column {
-                        Text(text = it.login, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                        Text(text = it.url, fontSize = 14.sp)
-                        Text(text = it.password, fontSize = 16.sp)
-                    }
-                    IconButton(onClick = {
-                        onEvent(ItemEvent.DeleteItem(it))
-                    }) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete item")
-                    }
-                   
-                }
+                //ItemCard(item = it, onClick = { onEvent(ItemEvent.DeleteItem(it))} )
+//                Row(
+//                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
+//                ) {
+//                    Column(
+//                        modifier = Modifier.weight(1f)
+//                    ) {
+//                        Text(text = it.login, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+//                        Text(text = it.url, fontSize = 14.sp)
+//                        Text(text = it.password, fontSize = 16.sp)
+//                    }
+//                    IconButton(onClick = {
+//                        onEvent(ItemEvent.DeleteItem(it))
+//                    }) {
+//                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete item")
+//                    }
+//
+//                }
             }
 
         }

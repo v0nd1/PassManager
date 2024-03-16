@@ -1,7 +1,11 @@
-package com.vondi.passmanager
+package com.vondi.passmanager.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vondi.passmanager.domain.model.Item
+import com.vondi.passmanager.data.dao.ItemDao
+import com.vondi.passmanager.domain.event.ItemEvent
+import com.vondi.passmanager.domain.model.ItemState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -40,6 +44,7 @@ class ItemViewModel(
                 val url = state.value.url
                 val login = state.value.login
                 val password = state.value.password
+                val name = state.value.name
 
                 if(url.isBlank() || login.isBlank() || password.isBlank()){
                     return
@@ -48,7 +53,8 @@ class ItemViewModel(
                 val item = Item(
                     url = url,
                     password = password,
-                    login = login
+                    login = login,
+                    name = name
                 )
 
                 viewModelScope.launch {
@@ -59,7 +65,8 @@ class ItemViewModel(
                     isAddingItem = false,
                     url = "",
                     login = "",
-                    password = ""
+                    password = "",
+                    name = ""
                 ) }
             }
             is ItemEvent.SetLogin -> {
@@ -67,14 +74,19 @@ class ItemViewModel(
                     login = event.login
                 )}
             }
+            is ItemEvent.SetName -> {
+                _state.update { it.copy(
+                    name = event.name
+                ) }
+            }
             is ItemEvent.SetPassword -> {
                 _state.update {it.copy(
-                    login = event.password
+                    password = event.password
                 )}
             }
             is ItemEvent.SetUrl -> {
                 _state.update {it.copy(
-                    login = event.url
+                    url = event.url
                 )}
             }
             ItemEvent.ShowDialog -> {

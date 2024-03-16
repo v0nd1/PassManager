@@ -1,9 +1,10 @@
-package com.vondi.passmanager
+package com.vondi.passmanager.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import com.vondi.passmanager.domain.model.Item
 import kotlinx.coroutines.flow.Flow
 
 @Dao
