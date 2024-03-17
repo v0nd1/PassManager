@@ -33,7 +33,7 @@ fun ItemScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                onEvent(ItemEvent.ShowDialog)
+                onEvent(ItemEvent.ShowDialogAdd)
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Item")
             }
@@ -46,33 +46,30 @@ fun ItemScreen(
                 onEvent = onEvent
             )
         }
+        if (state.editingItem != null && state.isChangeItem) {
+            ChangeItemDialog(
+                state = state,
+                onEvent = onEvent,
+                item = state.editingItem
+            )
+        }
         LazyColumn(
             contentPadding = it,
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(15.dp)
+            modifier = Modifier.fillMaxSize()
         ){
-            items(state.items){
-                //ItemCard(item = it, onClick = { onEvent(ItemEvent.DeleteItem(it))} )
-//                Row(
-//                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
-//                ) {
-//                    Column(
-//                        modifier = Modifier.weight(1f)
-//                    ) {
-//                        Text(text = it.login, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-//                        Text(text = it.url, fontSize = 14.sp)
-//                        Text(text = it.password, fontSize = 16.sp)
-//                    }
-//                    IconButton(onClick = {
-//                        onEvent(ItemEvent.DeleteItem(it))
-//                    }) {
-//                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete item")
-//                    }
-//
-//                }
+            items(state.items){item->
+                ItemCard(
+                    item = item,
+                    onDelete = { onEvent(ItemEvent.DeleteItem(item))},
+                    onClick = {onEvent(ItemEvent.ShowDialogChange)},
+                    onSelect = { selected-> onEvent(ItemEvent.EditItem(selected))}
+                )
+
             }
 
+
         }
+
 
     }
 

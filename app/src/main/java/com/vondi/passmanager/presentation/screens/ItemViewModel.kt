@@ -35,9 +35,14 @@ class ItemViewModel(
                 }
 
             }
-            ItemEvent.HideDialog -> {
+            ItemEvent.HideDialogAdd -> {
                 _state.update { it.copy(
                     isAddingItem = false
+                ) }
+            }
+            ItemEvent.HideDialogChange -> {
+                _state.update { it.copy(
+                    isChangeItem = false
                 ) }
             }
             ItemEvent.SaveItem -> {
@@ -89,11 +94,22 @@ class ItemViewModel(
                     url = event.url
                 )}
             }
-            ItemEvent.ShowDialog -> {
+            ItemEvent.ShowDialogAdd -> {
                 _state.update { it.copy(
                     isAddingItem = true
                 ) }
             }
+            ItemEvent.ShowDialogChange-> {
+                _state.update { it.copy(
+                    isChangeItem = true
+                ) }
+            }
+            is ItemEvent.EditItem -> {
+                _state.update { it.copy(
+                    editingItem = event.item
+                ) }
+            }
+
         }
     }
 

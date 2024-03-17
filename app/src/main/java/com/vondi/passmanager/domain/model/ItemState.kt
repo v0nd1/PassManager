@@ -8,5 +8,7 @@ data class ItemState(
     val name: String = "",
     val login: String = "",
     val password: String = "",
-    val isAddingItem: Boolean = false
+    val isAddingItem: Boolean = false,
+    val isChangeItem: Boolean = false,
+    val editingItem: Item? = null
 )
