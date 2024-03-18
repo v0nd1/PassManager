@@ -23,6 +23,7 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ import com.vondi.passmanager.domain.model.Item
 import com.vondi.passmanager.ui.theme.Black
 import com.vondi.passmanager.ui.theme.DarkGreen
 import com.vondi.passmanager.ui.theme.Green
+import com.vondi.passmanager.ui.theme.LightGreen
 import com.vondi.passmanager.ui.theme.White
 
 @Composable
@@ -59,7 +61,7 @@ fun ItemCard(
                 onClick()
             },
         colors = CardDefaults.cardColors(
-            contentColor = if (isSystemInDarkTheme()) Green else DarkGreen
+           containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen
         )
     ) {
         Row(
@@ -81,11 +83,12 @@ fun ItemCard(
                     Text(
                         text = item.name,
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = if (isSystemInDarkTheme()) Green else DarkGreen
                     )
                     Text(
                         text = "Login: $login",
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
                     )
                     Text(
                         text = "Password: " + buildAnnotatedString {
