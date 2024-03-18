@@ -1,6 +1,7 @@
 package com.vondi.passmanager.presentation.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,12 +20,14 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.Item
+import com.vondi.passmanager.ui.theme.Black
+import com.vondi.passmanager.ui.theme.DarkGreen
+import com.vondi.passmanager.ui.theme.Green
+import com.vondi.passmanager.ui.theme.White
 
 @Composable
 fun ItemCard(
@@ -50,7 +57,10 @@ fun ItemCard(
             .clickable {
                 onSelect(item)
                 onClick()
-            }
+            },
+        colors = CardDefaults.cardColors(
+            contentColor = if (isSystemInDarkTheme()) Green else DarkGreen
+        )
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,

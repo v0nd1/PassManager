@@ -1,5 +1,6 @@
 package com.vondi.passmanager.presentation.screens
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,9 @@ import androidx.compose.ui.unit.sp
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.ItemState
 import com.vondi.passmanager.presentation.components.ItemCard
+import com.vondi.passmanager.ui.theme.DarkGreen
+import com.vondi.passmanager.ui.theme.Green
+import com.vondi.passmanager.ui.theme.White
 
 @Composable
 fun ItemScreen(
@@ -32,9 +36,11 @@ fun ItemScreen(
 ){
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                onEvent(ItemEvent.ShowDialogAdd)
-            }) {
+            FloatingActionButton(
+                onClick = { onEvent(ItemEvent.ShowDialogAdd)},
+                containerColor = if (isSystemInDarkTheme()) Green else DarkGreen,
+                contentColor = White
+            ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Item")
             }
         }
@@ -64,13 +70,7 @@ fun ItemScreen(
                     onClick = {onEvent(ItemEvent.ShowDialogChange)},
                     onSelect = { selected-> onEvent(ItemEvent.EditItem(selected))}
                 )
-
             }
-
-
         }
-
-
     }
-
 }
