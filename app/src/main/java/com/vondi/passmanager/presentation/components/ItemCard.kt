@@ -61,7 +61,8 @@ fun ItemCard(
                 onClick()
             },
         colors = CardDefaults.cardColors(
-           containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen
+           containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen,
+            contentColor = if (isSystemInDarkTheme()) White else Black
         )
     ) {
         Row(
@@ -110,7 +111,10 @@ fun ItemCard(
             IconButton(onClick = {
                 onDelete(item)
             }) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete item")
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete item"
+                )
             }
         }
     }

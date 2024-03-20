@@ -6,7 +6,8 @@ import java.util.UUID
 
 @Entity
 data class Item(
-    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
     val url: String,
     val login: String,

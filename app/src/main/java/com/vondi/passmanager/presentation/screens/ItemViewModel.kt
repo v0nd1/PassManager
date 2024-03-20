@@ -51,7 +51,7 @@ class ItemViewModel(
                 val password = state.value.password
                 val name = state.value.name
 
-                if(url.isBlank() || login.isBlank() || password.isBlank()){
+                if(url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()){
                     return
                 }
 
@@ -68,6 +68,33 @@ class ItemViewModel(
 
                 _state.update { it.copy(
                     isAddingItem = false,
+                    url = "",
+                    login = "",
+                    password = "",
+                    name = ""
+                ) }
+            }
+            ItemEvent.SaveChangedItem -> {
+                val id = state.value.id
+                val url = state.value.url
+                val login = state.value.login
+                val password = state.value.password
+                val name = state.value.name
+
+                val item = Item(
+                    id = id,
+                    url = url,
+                    password = password,
+                    login = login,
+                    name = name
+                )
+
+                viewModelScope.launch {
+                    dao.updateItem(item)
+                }
+
+                _state.update { it.copy(
+                    isChangeItem = false,
                     url = "",
                     login = "",
                     password = "",

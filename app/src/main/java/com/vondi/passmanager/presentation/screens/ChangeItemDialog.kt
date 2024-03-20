@@ -1,15 +1,10 @@
 package com.vondi.passmanager.presentation.screens
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -17,15 +12,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import com.vondi.passmanager.R
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.Item
 import com.vondi.passmanager.domain.model.ItemState
@@ -44,7 +37,8 @@ fun ChangeItemDialog(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Button(onClick = {
-                    onEvent(ItemEvent.SaveItem)
+                    onEvent(ItemEvent.SaveChangedItem)
+
                 }) {
                     Text(text = "Save")
                 }
@@ -70,7 +64,11 @@ fun ChangeItemDialog(
                     },
                     trailingIcon = {
                         IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.name)) }) {
-                            Icon(imageVector = Icons.Default.ThumbUp, contentDescription = "dd")
+                            Icon(
+                                painter = painterResource(id = R.drawable.clipboard),
+                                contentDescription = "Copy to clipboard",
+                                modifier = Modifier.size(30.dp)
+                            )
                         }
                     }
                 )
@@ -81,6 +79,15 @@ fun ChangeItemDialog(
                     },
                     placeholder = {
                         Text(text = item.url)
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.url)) }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.clipboard),
+                                contentDescription = "Copy to clipboard",
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
                 )
                 TextField(
@@ -90,6 +97,15 @@ fun ChangeItemDialog(
                     },
                     placeholder = {
                         Text(text = item.login)
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.login)) }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.clipboard),
+                                contentDescription = "Copy to clipboard",
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
                 )
                 TextField(
@@ -99,10 +115,18 @@ fun ChangeItemDialog(
                     },
                     placeholder = {
                         Text(text = item.password)
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.password)) }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.clipboard),
+                                contentDescription = "Copy to clipboard",
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
                 )
             }
         }
     )
-
 }

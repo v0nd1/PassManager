@@ -3,6 +3,7 @@ package com.vondi.passmanager.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.vondi.passmanager.domain.model.Item
 import kotlinx.coroutines.flow.Flow
@@ -12,6 +13,8 @@ interface ItemDao {
 
     @Upsert
     suspend fun upsertItem(item: Item)
+    @Update
+    suspend fun updateItem(item: Item)
 
     @Delete
     suspend fun deleteItem(item: Item)

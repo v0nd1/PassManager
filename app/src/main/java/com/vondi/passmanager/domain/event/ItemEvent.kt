@@ -5,6 +5,7 @@ import com.vondi.passmanager.domain.model.Item
 sealed interface ItemEvent {
 
     data object SaveItem: ItemEvent
+    data object SaveChangedItem: ItemEvent
     data object ShowDialogAdd: ItemEvent
     data object ShowDialogChange: ItemEvent
     data object HideDialogAdd: ItemEvent
