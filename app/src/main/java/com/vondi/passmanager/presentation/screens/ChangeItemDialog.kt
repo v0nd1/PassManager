@@ -30,6 +30,8 @@ fun ChangeItemDialog(
     modifier: Modifier = Modifier,
     item: Item
 ) {
+    onEvent(ItemEvent.SetId(item.id))
+    onEvent(ItemEvent.SetItem(item))
     AlertDialog(
         confirmButton = {
             Box(

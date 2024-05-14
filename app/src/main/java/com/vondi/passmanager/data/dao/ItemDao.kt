@@ -2,6 +2,7 @@ package com.vondi.passmanager.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
@@ -13,7 +14,7 @@ interface ItemDao {
 
     @Upsert
     suspend fun upsertItem(item: Item)
-    @Update
+    @Upsert
     suspend fun updateItem(item: Item)
 
     @Delete

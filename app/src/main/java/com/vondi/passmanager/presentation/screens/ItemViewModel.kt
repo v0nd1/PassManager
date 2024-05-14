@@ -1,5 +1,7 @@
 package com.vondi.passmanager.presentation.screens
 
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vondi.passmanager.domain.model.Item
@@ -29,6 +31,7 @@ class ItemViewModel(
         event: ItemEvent
     ){
         when(event){
+
             is ItemEvent.DeleteItem -> {
                 viewModelScope.launch {
                     dao.deleteItem(event.item)
@@ -81,24 +84,33 @@ class ItemViewModel(
                 val password = state.value.password
                 val name = state.value.name
 
-                val item = Item(
+                val currentItem = state.value.item
+
+                val newItem = currentItem?.copy(
                     id = id,
-                    url = url,
-                    password = password,
-                    login = login,
-                    name = name
+                    url = url.ifBlank { currentItem.url },
+                    login = login.ifBlank { currentItem.login },
+                    password = password.ifBlank { currentItem.password },
+                    name = name.ifBlank { currentItem.name }
                 )
 
                 viewModelScope.launch {
-                    dao.updateItem(item)
+                    newItem?.let { dao.updateItem(it) }
                 }
 
+                _state.update {
+                    it.copy(
+                        isChangeItem = false,
+                        url = if (url.isNotBlank()) "" else it.url,
+                        login = if (login.isNotBlank()) "" else it.login,
+                        password = if (password.isNotBlank()) "" else it.password,
+                        name = if (name.isNotBlank()) "" else it.name
+                    )
+                }
+            }
+            is ItemEvent.SetItem -> {
                 _state.update { it.copy(
-                    isChangeItem = false,
-                    url = "",
-                    login = "",
-                    password = "",
-                    name = ""
+                    item = event.item
                 ) }
             }
             is ItemEvent.SetLogin -> {
@@ -121,6 +133,11 @@ class ItemViewModel(
                     url = event.url
                 )}
             }
+            is ItemEvent.SetId -> {
+                _state.update {it.copy(
+                    id = event.id
+                )}
+            }
             ItemEvent.ShowDialogAdd -> {
                 _state.update { it.copy(
                     isAddingItem = true
@@ -136,6 +153,7 @@ class ItemViewModel(
                     editingItem = event.item
                 ) }
             }
+
 
         }
     }
