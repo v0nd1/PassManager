@@ -35,12 +35,12 @@ fun AddItemDialog(
             ) {
                 Button(onClick = {
                     if(state.url.isBlank() ||state.name.isBlank() || state.password.isBlank() || state.login.isBlank()){
-                        Toast.makeText(context, "All fields must be filled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Все поля должны быть заполенены", Toast.LENGTH_SHORT).show()
                     }else{
                         onEvent(ItemEvent.SaveItem)
                     }
                 }) {
-                    Text(text = "Save")
+                    Text(text = "Сохранить")
                 }
             }
         },
@@ -48,7 +48,7 @@ fun AddItemDialog(
         onDismissRequest = {
             onEvent(ItemEvent.HideDialogAdd)
         },
-        title = { Text(text = "Add item") },
+        title = { Text(text = "Добавить") },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -59,7 +59,7 @@ fun AddItemDialog(
                         onEvent(ItemEvent.SetName(it))
                     },
                     placeholder = {
-                        Text(text = "Name")
+                        Text(text = "Наименование")
                     }
                 )
                 TextField(
@@ -68,7 +68,7 @@ fun AddItemDialog(
                         onEvent(ItemEvent.SetUrl(it))
                     },
                     placeholder = {
-                        Text(text = "URL")
+                        Text(text = "Ссылка")
                     }
                 )
                 TextField(
@@ -77,7 +77,7 @@ fun AddItemDialog(
                         onEvent(ItemEvent.SetLogin(it))
                     },
                     placeholder = {
-                        Text(text = "Login")
+                        Text(text = "Логин")
                     }
                 )
                 TextField(
@@ -86,7 +86,7 @@ fun AddItemDialog(
                         onEvent(ItemEvent.SetPassword(it))
                     },
                     placeholder = {
-                        Text(text = "Password")
+                        Text(text = "Пароль")
                     }
                 )
             }

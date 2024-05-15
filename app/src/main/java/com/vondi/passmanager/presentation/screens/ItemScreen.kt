@@ -42,7 +42,7 @@ fun ItemScreen(
                 containerColor = if (isSystemInDarkTheme()) Green else DarkGreen,
                 contentColor = White
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Item")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить")
             }
         }
 
@@ -66,7 +66,7 @@ fun ItemScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             if (state.items.isEmpty()){
-                item { Text(text = "No passwords") }
+                item { Text(text = "Пароли отсутствуют") }
             }
             items(state.items){item->
                 ItemCard(

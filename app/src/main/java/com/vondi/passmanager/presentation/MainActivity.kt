@@ -8,11 +8,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.vondi.passmanager.data.network.PasswordDb
 import com.vondi.passmanager.presentation.screens.ItemScreen
 import com.vondi.passmanager.presentation.screens.ItemViewModel
+import com.vondi.passmanager.presentation.screens.PasswordScreen
 import com.vondi.passmanager.ui.theme.PassManagerTheme
+import xyz.teamgravity.pin_lock_compose.PinManager
 
 class MainActivity : ComponentActivity() {
 
@@ -36,10 +41,21 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        PinManager.initialize(this)
         setContent {
             PassManagerTheme {
                 val state by viewModel.state.collectAsState()
-                ItemScreen(state = state, onEvent = viewModel::onEvent)
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "auth"){
+                    composable("auth"){
+                        PasswordScreen(navController)
+                    }
+                    composable("mainScreen"){
+                        ItemScreen(state = state, onEvent = viewModel::onEvent)
+                    }
+
+                }
+
             }
         }
     }
