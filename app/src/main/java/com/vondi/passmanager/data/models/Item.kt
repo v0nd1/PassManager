@@ -1,4 +1,4 @@
-package com.vondi.passmanager.domain.model
+package com.vondi.passmanager.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

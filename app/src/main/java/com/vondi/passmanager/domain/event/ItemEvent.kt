@@ -1,6 +1,6 @@
 package com.vondi.passmanager.domain.event
 
-import com.vondi.passmanager.domain.model.Item
+import com.vondi.passmanager.data.models.Item
 
 sealed interface ItemEvent {
 

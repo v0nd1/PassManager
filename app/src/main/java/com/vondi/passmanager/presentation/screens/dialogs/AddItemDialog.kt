@@ -1,4 +1,4 @@
-package com.vondi.passmanager.presentation.screens
+package com.vondi.passmanager.presentation.screens.dialogs
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.vondi.passmanager.domain.event.ItemEvent
-import com.vondi.passmanager.domain.model.ItemState
+import com.vondi.passmanager.domain.model.item.ItemState
 
 
 

@@ -80,6 +80,9 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
-    // LottieAnim
+    // Lottie Animation
     implementation("com.airbnb.android:lottie-compose:4.2.0")
+
+    // Keystore
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }

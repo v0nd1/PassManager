@@ -1,13 +1,11 @@
-package com.vondi.passmanager.presentation.screens
+package com.vondi.passmanager.presentation.screens.item
 
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vondi.passmanager.domain.model.Item
+import com.vondi.passmanager.data.models.Item
 import com.vondi.passmanager.data.dao.ItemDao
 import com.vondi.passmanager.domain.event.ItemEvent
-import com.vondi.passmanager.domain.model.ItemState
+import com.vondi.passmanager.domain.model.item.ItemState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
