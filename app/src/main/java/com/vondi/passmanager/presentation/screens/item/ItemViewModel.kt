@@ -15,11 +15,12 @@ import kotlinx.coroutines.launch
 
 class ItemViewModel(
     private val dao: ItemDao
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ItemState())
-    private val _items = dao.getItems().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-    val state = combine(_state, _items){ state, items ->
+    private val _items =
+        dao.getItems().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    val state = combine(_state, _items) { state, items ->
         state.copy(
             items = items
         )
@@ -27,32 +28,38 @@ class ItemViewModel(
 
     fun onEvent(
         event: ItemEvent
-    ){
-        when(event){
+    ) {
+        when (event) {
 
             is ItemEvent.DeleteItem -> {
                 viewModelScope.launch {
                     dao.deleteItem(event.item)
                 }
+            }
 
-            }
             ItemEvent.HideDialogAdd -> {
-                _state.update { it.copy(
-                    isAddingItem = false
-                ) }
+                _state.update {
+                    it.copy(
+                        isAddingItem = false
+                    )
+                }
             }
+
             ItemEvent.HideDialogChange -> {
-                _state.update { it.copy(
-                    isChangeItem = false
-                ) }
+                _state.update {
+                    it.copy(
+                        isChangeItem = false
+                    )
+                }
             }
+
             ItemEvent.SaveItem -> {
                 val url = state.value.url
                 val login = state.value.login
                 val password = state.value.password
                 val name = state.value.name
 
-                if(url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()){
+                if (url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()) {
                     return
                 }
 
@@ -67,14 +74,17 @@ class ItemViewModel(
                     dao.upsertItem(item)
                 }
 
-                _state.update { it.copy(
-                    isAddingItem = false,
-                    url = "",
-                    login = "",
-                    password = "",
-                    name = ""
-                ) }
+                _state.update {
+                    it.copy(
+                        isAddingItem = false,
+                        url = "",
+                        login = "",
+                        password = "",
+                        name = ""
+                    )
+                }
             }
+
             ItemEvent.SaveChangedItem -> {
                 val id = state.value.id
                 val url = state.value.url
@@ -106,50 +116,77 @@ class ItemViewModel(
                     )
                 }
             }
+
             is ItemEvent.SetItem -> {
-                _state.update { it.copy(
-                    item = event.item
-                ) }
+                _state.update {
+                    it.copy(
+                        item = event.item
+                    )
+                }
             }
+
             is ItemEvent.SetLogin -> {
-                _state.update {it.copy(
-                    login = event.login
-                )}
+                _state.update {
+                    it.copy(
+                        login = event.login
+                    )
+                }
             }
+
             is ItemEvent.SetName -> {
-                _state.update { it.copy(
-                    name = event.name
-                ) }
+                _state.update {
+                    it.copy(
+                        name = event.name
+                    )
+                }
             }
+
             is ItemEvent.SetPassword -> {
-                _state.update {it.copy(
-                    password = event.password
-                )}
+                _state.update {
+                    it.copy(
+                        password = event.password
+                    )
+                }
             }
+
             is ItemEvent.SetUrl -> {
-                _state.update {it.copy(
-                    url = event.url
-                )}
+                _state.update {
+                    it.copy(
+                        url = event.url
+                    )
+                }
             }
+
             is ItemEvent.SetId -> {
-                _state.update {it.copy(
-                    id = event.id
-                )}
+                _state.update {
+                    it.copy(
+                        id = event.id
+                    )
+                }
             }
+
             ItemEvent.ShowDialogAdd -> {
-                _state.update { it.copy(
-                    isAddingItem = true
-                ) }
+                _state.update {
+                    it.copy(
+                        isAddingItem = true
+                    )
+                }
             }
-            ItemEvent.ShowDialogChange-> {
-                _state.update { it.copy(
-                    isChangeItem = true
-                ) }
+
+            ItemEvent.ShowDialogChange -> {
+                _state.update {
+                    it.copy(
+                        isChangeItem = true
+                    )
+                }
             }
+
             is ItemEvent.EditItem -> {
-                _state.update { it.copy(
-                    editingItem = event.item
-                ) }
+                _state.update {
+                    it.copy(
+                        editingItem = event.item
+                    )
+                }
             }
 
 

@@ -22,21 +22,17 @@ class MainActivity : ComponentActivity() {
 
     private val db by lazy {
         Room.databaseBuilder(
-            applicationContext,
-            PasswordDb::class.java,
-            "password.db"
+            applicationContext, PasswordDb::class.java, "password.db"
         ).build()
     }
 
-    private val viewModelItem by viewModels<ItemViewModel> (
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return ItemViewModel(db.dao) as T
-                }
+    private val viewModelItem by viewModels<ItemViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return ItemViewModel(db.dao) as T
             }
         }
-    )
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

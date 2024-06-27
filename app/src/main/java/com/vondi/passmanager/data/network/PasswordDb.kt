@@ -9,7 +9,7 @@ import com.vondi.passmanager.data.dao.ItemDao
     entities = [Item::class],
     version = 1
 )
-abstract class PasswordDb: RoomDatabase() {
+abstract class PasswordDb : RoomDatabase() {
 
     abstract val dao: ItemDao
 

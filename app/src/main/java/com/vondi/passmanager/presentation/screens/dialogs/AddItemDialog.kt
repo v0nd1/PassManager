@@ -19,7 +19,6 @@ import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
 
 
-
 @Composable
 fun AddItemDialog(
     state: ItemState,
@@ -34,9 +33,13 @@ fun AddItemDialog(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Button(onClick = {
-                    if(state.url.isBlank() ||state.name.isBlank() || state.password.isBlank() || state.login.isBlank()){
-                        Toast.makeText(context, "Все поля должны быть заполенены", Toast.LENGTH_SHORT).show()
-                    }else{
+                    if (state.url.isBlank() || state.name.isBlank() || state.password.isBlank() || state.login.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Все поля должны быть заполенены",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
                         onEvent(ItemEvent.SaveItem)
                     }
                 }) {

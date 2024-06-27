@@ -17,4 +17,32 @@ class PinLockViewModel(
     private val _state = MutableStateFlow(PinLockState())
     val state: StateFlow<PinLockState> = _state
 
+    fun onEvent(
+        event: PinLockEvent
+    ) {
+        when (event) {
+            is PinLockEvent.DeleteDigit -> {
+                _state.update {
+                    it.copy(
+                        inputPin = it.inputPin.dropLast(1)
+                    )
+                }
+            }
+            is PinLockEvent.AddDigit -> {
+                _state.update {
+                    it.copy(
+                        inputPin = it.inputPin.plus(event.digit)
+                    )
+                }
+            }
+            is PinLockEvent.ClearPin -> {
+                _state.update {
+                    it.copy(
+                        inputPin = ""
+                    )
+                }
+            }
+        }
+    }
+
 }

@@ -40,7 +40,7 @@ fun ItemCard(
     onDelete: (Item) -> Unit,
     onClick: () -> Unit,
     onSelect: (Item) -> Unit
-){
+) {
     val login = item.login
     val password = item.password
 
@@ -53,14 +53,14 @@ fun ItemCard(
                 onClick()
             },
         colors = CardDefaults.cardColors(
-           containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen,
+            containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen,
             contentColor = if (isSystemInDarkTheme()) White else Black
         )
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
@@ -85,7 +85,7 @@ fun ItemCard(
                     )
                     Text(
                         text = "Password: " + buildAnnotatedString {
-                            repeat(if (password.length > 15 ) 15 else password.length) {
+                            repeat(if (password.length > 15) 15 else password.length) {
                                 append("*")
                             }
                         },

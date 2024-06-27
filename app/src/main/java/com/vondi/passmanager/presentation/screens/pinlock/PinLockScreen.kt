@@ -43,7 +43,7 @@ import com.vondi.passmanager.R
 import com.vondi.passmanager.ui.theme.LightGreen
 
 @Composable
-fun PinLockScreen(navController: NavController){
+fun PinLockScreen(navController: NavController) {
     Keyboard(
         navController = navController
     )
@@ -88,8 +88,8 @@ private fun Keyboard(
                 rows.forEach {
                     PinKeyItem(
                         onClick = {
-                            when(it) {
-                                "del" ->  enteredPin.dropLast(1)
+                            when (it) {
+                                "del" -> enteredPin.dropLast(1)
                                 "OK" -> {
                                     if (enteredPin == correctedPin) {
                                         navController.navigate("mainScreen")
@@ -98,6 +98,7 @@ private fun Keyboard(
                                         Log.d("error", "Pin is uncorrected $enteredPin")
                                     }
                                 }
+
                                 else -> {
                                     if (enteredPin.length < 4) enteredPin += it
                                     Log.d("pin", enteredPin)
@@ -123,6 +124,7 @@ private fun Keyboard(
                                         .size(35.dp)
                                 )
                             }
+
                             else -> Text(
                                 text = it,
                                 fontSize = 30.sp,

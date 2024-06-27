@@ -12,6 +12,7 @@ interface ItemDao {
 
     @Upsert
     suspend fun upsertItem(item: Item)
+
     @Upsert
     suspend fun updateItem(item: Item)
 
