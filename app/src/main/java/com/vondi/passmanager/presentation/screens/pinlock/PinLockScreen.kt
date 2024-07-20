@@ -1,8 +1,8 @@
 package com.vondi.passmanager.presentation.screens.pinlock
 
 import android.util.Log
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +18,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +29,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.vondi.passmanager.R
-import com.vondi.passmanager.ui.theme.LightGreen
+import com.vondi.passmanager.ui.theme.White
 
 @Composable
 fun PinLockScreen(navController: NavController) {
@@ -65,10 +63,11 @@ private fun Keyboard(
 
     Column(
         modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(bottom = 100.dp),
         verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -92,6 +91,7 @@ private fun Keyboard(
                                 "del" -> enteredPin.dropLast(1)
                                 "OK" -> {
                                     if (enteredPin == correctedPin) {
+                                        navController.popBackStack()
                                         navController.navigate("mainScreen")
                                     } else {
                                         enteredPin = ""
@@ -112,7 +112,8 @@ private fun Keyboard(
                                     painter = painterResource(id = R.drawable.del_icon),
                                     contentDescription = "Clear",
                                     modifier = Modifier
-                                        .size(30.dp)
+                                        .size(30.dp),
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
 
@@ -121,14 +122,16 @@ private fun Keyboard(
                                     imageVector = Icons.Default.Check,
                                     contentDescription = "Success",
                                     modifier = Modifier
-                                        .size(35.dp)
+                                        .size(35.dp),
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
 
                             else -> Text(
                                 text = it,
                                 fontSize = 30.sp,
-                                fontWeight = FontWeight.Medium
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.secondary
                             )
                         }
                     }
@@ -144,7 +147,10 @@ private fun PinDot(isFilled: Boolean) {
         modifier = Modifier
             .padding(10.dp)
             .size(30.dp)
-            .background(if (isFilled) LightGreen else Color.Gray, CircleShape)
+            .background(if (isFilled) MaterialTheme.colorScheme.tertiary else
+                if (isSystemInDarkTheme()) White
+                else Color.Gray, CircleShape
+            )
     )
 }
 
@@ -153,7 +159,7 @@ private fun PinKeyItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier.padding(8.dp),
     shape: Shape = RoundedCornerShape(100),
-    backgroundColor: Color = LightGreen,
+    backgroundColor: Color = MaterialTheme.colorScheme.tertiary,
     contentColor: Color = Color.Black,
     elevation: Dp = 4.dp,
     content: @Composable () -> Unit

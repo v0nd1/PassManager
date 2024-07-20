@@ -18,14 +18,14 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Green,
-    secondary = DarkGreen,
+    secondary = White,
     tertiary = DarkGreen,
-    background = Black
+    background = DarkGreen2
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Green,
-    secondary = DarkGreen,
+    primary = DarkGreen,
+    secondary = Black,
     tertiary = LightGreen,
     background = White
 )
@@ -37,10 +37,10 @@ fun PassManagerTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+//            val context = LocalContext.current
+//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+//        }
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme

@@ -1,7 +1,6 @@
 package com.vondi.passmanager.presentation.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,11 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vondi.passmanager.data.models.Item
-import com.vondi.passmanager.ui.theme.Black
-import com.vondi.passmanager.ui.theme.DarkGreen
-import com.vondi.passmanager.ui.theme.Green
-import com.vondi.passmanager.ui.theme.LightGreen
-import com.vondi.passmanager.ui.theme.White
 
 @Composable
 fun ItemCard(
@@ -53,8 +48,8 @@ fun ItemCard(
                 onClick()
             },
         colors = CardDefaults.cardColors(
-            containerColor = if (isSystemInDarkTheme()) DarkGreen else LightGreen,
-            contentColor = if (isSystemInDarkTheme()) White else Black
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.secondary
         )
     ) {
         Row(
@@ -77,7 +72,7 @@ fun ItemCard(
                         text = item.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = if (isSystemInDarkTheme()) Green else DarkGreen
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = "Login: $login",
