@@ -22,7 +22,7 @@ import com.vondi.passmanager.ui.theme.White
 
 @Composable
 fun ItemScreen(
-    state: ItemState,
+    stateItem: ItemState,
     onEvent: (ItemEvent) -> Unit
 ) {
     Scaffold(
@@ -37,17 +37,17 @@ fun ItemScreen(
         }
 
     ) {
-        if (state.isAddingItem) {
+        if (stateItem.isAddingItem) {
             AddItemDialog(
-                state = state,
+                state = stateItem,
                 onEvent = onEvent
             )
         }
-        if (state.editingItem != null && state.isChangeItem) {
+        if (stateItem.editingItem != null && stateItem.isChangeItem) {
             ChangeItemDialog(
-                state = state,
+                state = stateItem,
                 onEvent = onEvent,
-                item = state.editingItem
+                item = stateItem.editingItem
             )
         }
         LazyColumn(
@@ -55,10 +55,10 @@ fun ItemScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (state.items.isEmpty()) {
+            if (stateItem.items.isEmpty()) {
                 item { Text(text = "Пароли отсутствуют") }
             }
-            items(state.items) { item ->
+            items(stateItem.items) { item ->
                 ItemCard(
                     item = item,
                     onDelete = { onEvent(ItemEvent.DeleteItem(item)) },

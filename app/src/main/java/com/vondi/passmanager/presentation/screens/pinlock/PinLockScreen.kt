@@ -1,6 +1,7 @@
 package com.vondi.passmanager.presentation.screens.pinlock
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -23,14 +24,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -38,22 +36,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.vondi.passmanager.R
+import com.vondi.passmanager.domain.event.PinLockEvent
+import com.vondi.passmanager.domain.model.pinlock.PinLockState
 import com.vondi.passmanager.ui.theme.White
 
 @Composable
-fun PinLockScreen(navController: NavController) {
+fun PinLockScreen(
+    navController: NavController,
+    onEvent: (PinLockEvent) -> Unit,
+    statePin: PinLockState
+) {
+
     Keyboard(
-        navController = navController
+        navController = navController,
+        onEvent = onEvent,
+        statePin = statePin
     )
 }
 
 
 @Composable
 private fun Keyboard(
-    navController: NavController
+    navController: NavController,
+    onEvent: (PinLockEvent) -> Unit,
+    statePin: PinLockState
 ) {
-    var enteredPin by remember { mutableStateOf("") }
-    val correctedPin = "1234"
     val listKeys = listOf(
         listOf("1", "2", "3"),
         listOf("4", "5", "6"),
@@ -69,13 +76,25 @@ private fun Keyboard(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val text = when(statePin.error) {
+            ErrorPin.INCORRECT_PASS -> "Попробуйте ещё раз"
+            ErrorPin.TRY_PIN -> "Введите пин-код ещё раз"
+            ErrorPin.NOT_ENOUGH_DIG -> "Недостаточно цифр, попробуйте еще раз"
+            else -> "Введите пин-код"
+        }
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Spacer(modifier = Modifier.height(30.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             repeat(4) { index ->
-                val isFilled = index < enteredPin.length
+                val isFilled = index < statePin.inputPin.length
                 PinDot(isFilled = isFilled)
             }
         }
@@ -88,20 +107,21 @@ private fun Keyboard(
                     PinKeyItem(
                         onClick = {
                             when (it) {
-                                "del" -> enteredPin.dropLast(1)
+                                "del" -> if (statePin.inputPin.isNotEmpty()) onEvent(PinLockEvent.DeleteDigit)
                                 "OK" -> {
-                                    if (enteredPin == correctedPin) {
+                                    onEvent(PinLockEvent.CheckPin)
+                                    if (statePin.isAuthenticated && statePin.error == ErrorPin.SUCCESS){
                                         navController.popBackStack()
                                         navController.navigate("mainScreen")
                                     } else {
-                                        enteredPin = ""
-                                        Log.d("error", "Pin is uncorrected $enteredPin")
+                                        onEvent(PinLockEvent.ClearPin)
                                     }
                                 }
 
                                 else -> {
-                                    if (enteredPin.length < 4) enteredPin += it
-                                    Log.d("pin", enteredPin)
+                                    if (statePin.inputPin.length < 4) onEvent(
+                                        PinLockEvent.AddDigit(it)
+                                    )
                                 }
                             }
                         }
@@ -147,9 +167,10 @@ private fun PinDot(isFilled: Boolean) {
         modifier = Modifier
             .padding(10.dp)
             .size(30.dp)
-            .background(if (isFilled) MaterialTheme.colorScheme.tertiary else
-                if (isSystemInDarkTheme()) White
-                else Color.Gray, CircleShape
+            .background(
+                if (isFilled) MaterialTheme.colorScheme.tertiary else
+                    if (isSystemInDarkTheme()) White
+                    else Color.Gray, CircleShape
             )
     )
 }
