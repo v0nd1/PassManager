@@ -1,11 +1,15 @@
 package com.vondi.passmanager.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
@@ -19,6 +23,7 @@ import com.vondi.passmanager.presentation.screens.item.ItemViewModel
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockScreen
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockViewModel
 import com.vondi.passmanager.ui.theme.PassManagerTheme
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -54,14 +59,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             PassManagerTheme {
                 val stateItem by viewModelItem.state.collectAsState()
-                val statePin by viewModelPinLock.state.collectAsState()
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "auth") {
                     composable("auth") {
                         PinLockScreen(
                             navController = navController,
-                            onEvent = viewModelPinLock::onEvent,
-                            statePin = statePin
+                            viewModel = viewModelPinLock
                         )
                     }
                     composable("mainScreen") {

@@ -18,7 +18,11 @@ class PinLockViewModel(
 
     init {
         val pinSet = keystoreManager.getPin().isNullOrBlank()
-        _state.value = _state.value.copy(isAuthenticated = !pinSet)
+        _state.update {
+            it.copy(
+                isAuthenticated = !pinSet
+            )
+        }
     }
 
     fun onEvent(event: PinLockEvent) {
@@ -29,7 +33,6 @@ class PinLockViewModel(
                         inputPin = it.inputPin.substring(0, it.inputPin.length - 1)
                     )
                 }
-                Log.d("PinLockViewModel", _state.value.inputPin)
             }
             is PinLockEvent.AddDigit -> {
                 _state.update {
@@ -37,7 +40,6 @@ class PinLockViewModel(
                         inputPin = it.inputPin.plus(event.digit)
                     )
                 }
-                Log.d("PinLock", "enter = ${event.digit} pin = ${_state.value.inputPin}")
             }
             is PinLockEvent.ClearPin -> {
                 _state.update {
@@ -48,33 +50,35 @@ class PinLockViewModel(
             }
             is PinLockEvent.CheckPin -> {
                 val currentState = _state.value
-                Log.d("PinLock", "ConfPin = ${currentState.confirmPin} InpPin = ${currentState.inputPin} IsAuth = ${currentState.isAuthenticated} Error = ${currentState.error}")
                 if (currentState.inputPin.length == 4) {
                     if (currentState.isAuthenticated) {
                         val storedPin = keystoreManager.getPin()
                         if (currentState.inputPin == storedPin) {
-                            Log.d("PinLOCKHERE", "KERE4")
-                            _state.value = currentState.copy(error = ErrorPin.SUCCESS)
-
+                            _state.update {
+                                it.copy(
+                                    error = ErrorPin.SUCCESS
+                                )
+                            }
+                            Log.d("PinLock", "Here ${_state.value.error}")
                         } else {
-                            Log.d("PinLOCKHERE", "KERE5 ${currentState.error}")
                             _state.update {
                                 it.copy(
                                     error = ErrorPin.INCORRECT_PASS
                                 )
                             }
-                            Log.d("PinLOCKHERE", "KERE52 ${currentState.error}")
+                            Log.d("PinLock", "Here ${currentState.error}")
+
                             onEvent(PinLockEvent.ClearPin)
                         }
                     } else {
                         if (currentState.confirmPin.isNullOrBlank()) {
-                            Log.d("PinLOCKHERE", "KERE3")
                             _state.update {
                                 it.copy(
                                     confirmPin = currentState.inputPin,
                                     error = ErrorPin.TRY_PIN
                                 )
                             }
+                            Log.d("PinLock", "Here ${currentState.error}")
                             onEvent(PinLockEvent.ClearPin)
                         } else {
                             if (currentState.inputPin == currentState.confirmPin) {
@@ -84,19 +88,21 @@ class PinLockViewModel(
                                     error = ErrorPin.SUCCESS,
                                     confirmPin = null
                                 )
+                                Log.d("PinLock", "Here ${currentState.error}")
                             } else {
-                                Log.d("PinLOCKHERE", "KERE1")
                                 _state.value = currentState.copy(error = ErrorPin.INCORRECT_PASS, confirmPin = null)
+                                Log.d("PinLock", "Here ${currentState.error}")
                                 onEvent(PinLockEvent.ClearPin)
                             }
                         }
-
                     }
                 } else {
-                    Log.d("PinLOCKHERE", "KERE2")
                     _state.value = currentState.copy(error = ErrorPin.NOT_ENOUGH_DIG)
                     onEvent(PinLockEvent.ClearPin)
                 }
+                Log.d("PinLock", "ConfPin = ${currentState.confirmPin} " +
+                        "InpPin = ${currentState.inputPin} IsAuth = ${currentState.isAuthenticated} " +
+                        "Error = ${_state.value.error}")
             }
         }
     }

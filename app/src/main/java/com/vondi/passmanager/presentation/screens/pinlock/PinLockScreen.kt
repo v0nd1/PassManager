@@ -1,7 +1,6 @@
 package com.vondi.passmanager.presentation.screens.pinlock
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -24,13 +23,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,17 +41,22 @@ import com.vondi.passmanager.R
 import com.vondi.passmanager.domain.event.PinLockEvent
 import com.vondi.passmanager.domain.model.pinlock.PinLockState
 import com.vondi.passmanager.ui.theme.White
+import kotlin.math.log
 
 @Composable
 fun PinLockScreen(
     navController: NavController,
-    onEvent: (PinLockEvent) -> Unit,
-    statePin: PinLockState
+    viewModel: PinLockViewModel
 ) {
-
+    val statePin by viewModel.state.collectAsState()
+    LaunchedEffect(statePin.error) {
+        if (statePin.isAuthenticated && statePin.error == ErrorPin.SUCCESS) {
+            navController.popBackStack()
+            navController.navigate("mainScreen")
+        }
+    }
     Keyboard(
-        navController = navController,
-        onEvent = onEvent,
+        onEvent = viewModel::onEvent,
         statePin = statePin
     )
 }
@@ -57,7 +64,6 @@ fun PinLockScreen(
 
 @Composable
 private fun Keyboard(
-    navController: NavController,
     onEvent: (PinLockEvent) -> Unit,
     statePin: PinLockState
 ) {
@@ -76,15 +82,19 @@ private fun Keyboard(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val text = when(statePin.error) {
+        var text = when(statePin.error) {
             ErrorPin.INCORRECT_PASS -> "Попробуйте ещё раз"
-            ErrorPin.TRY_PIN -> "Введите пин-код ещё раз"
+            ErrorPin.TRY_PIN -> "Введите пин-код ещё раз для подтверждения"
             ErrorPin.NOT_ENOUGH_DIG -> "Недостаточно цифр, попробуйте еще раз"
             else -> "Введите пин-код"
+        }
+        if (!statePin.isAuthenticated && statePin.error == null) {
+            text = "Для регистрации  введите пин-код"
         }
         Text(
             text = text,
             fontSize = 18.sp,
+            textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.secondary
         )
         Spacer(modifier = Modifier.height(30.dp))
@@ -110,14 +120,7 @@ private fun Keyboard(
                                 "del" -> if (statePin.inputPin.isNotEmpty()) onEvent(PinLockEvent.DeleteDigit)
                                 "OK" -> {
                                     onEvent(PinLockEvent.CheckPin)
-                                    if (statePin.isAuthenticated && statePin.error == ErrorPin.SUCCESS){
-                                        navController.popBackStack()
-                                        navController.navigate("mainScreen")
-                                    } else {
-                                        onEvent(PinLockEvent.ClearPin)
-                                    }
                                 }
-
                                 else -> {
                                     if (statePin.inputPin.length < 4) onEvent(
                                         PinLockEvent.AddDigit(it)
