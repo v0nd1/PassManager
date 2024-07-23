@@ -25,8 +25,6 @@ This application is based on clean architecture and uses the MVVM methodology. U
 - [Coil](https://coil-kt.github.io/coil/)
 - [Jsoup](https://jsoup.org/)
 
----
-
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
