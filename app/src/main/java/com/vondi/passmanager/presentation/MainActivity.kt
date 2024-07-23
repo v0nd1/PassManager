@@ -1,21 +1,16 @@
 package com.vondi.passmanager.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
 import com.vondi.passmanager.data.network.PasswordDb
 import com.vondi.passmanager.data.util.KeystoreManager
 import com.vondi.passmanager.presentation.screens.item.ItemScreen
@@ -23,7 +18,6 @@ import com.vondi.passmanager.presentation.screens.item.ItemViewModel
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockScreen
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockViewModel
 import com.vondi.passmanager.ui.theme.PassManagerTheme
-import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -32,9 +26,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val db by lazy {
-        Room.databaseBuilder(
-            applicationContext, PasswordDb::class.java, "password.db"
-        ).build()
+        PasswordDb.getInstance(applicationContext)
     }
 
     private val viewModelItem by viewModels<ItemViewModel>(factoryProducer = {

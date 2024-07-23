@@ -72,7 +72,8 @@ fun ChangeItemDialog(
                                 modifier = Modifier.size(30.dp)
                             )
                         }
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.url,
@@ -90,7 +91,8 @@ fun ChangeItemDialog(
                                 modifier = Modifier.size(30.dp)
                             )
                         }
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.login,
@@ -108,7 +110,8 @@ fun ChangeItemDialog(
                                 modifier = Modifier.size(30.dp)
                             )
                         }
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.password,
@@ -126,7 +129,8 @@ fun ChangeItemDialog(
                                 modifier = Modifier.size(30.dp)
                             )
                         }
-                    }
+                    },
+                    maxLines = 1
                 )
             }
         }

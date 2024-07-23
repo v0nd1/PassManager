@@ -63,7 +63,8 @@ fun AddItemDialog(
                     },
                     placeholder = {
                         Text(text = "Наименование")
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.url,
@@ -72,7 +73,8 @@ fun AddItemDialog(
                     },
                     placeholder = {
                         Text(text = "Ссылка")
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.login,
@@ -81,7 +83,8 @@ fun AddItemDialog(
                     },
                     placeholder = {
                         Text(text = "Логин")
-                    }
+                    },
+                    maxLines = 1
                 )
                 TextField(
                     value = state.password,
@@ -90,7 +93,8 @@ fun AddItemDialog(
                     },
                     placeholder = {
                         Text(text = "Пароль")
-                    }
+                    },
+                    maxLines = 1
                 )
             }
         }

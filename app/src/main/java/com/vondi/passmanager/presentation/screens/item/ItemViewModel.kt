@@ -1,9 +1,11 @@
 package com.vondi.passmanager.presentation.screens.item
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vondi.passmanager.data.models.Item
 import com.vondi.passmanager.data.dao.ItemDao
+import com.vondi.passmanager.data.util.getFaviconUrl
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,34 +56,36 @@ class ItemViewModel(
             }
 
             ItemEvent.SaveItem -> {
-                val url = state.value.url
-                val login = state.value.login
-                val password = state.value.password
-                val name = state.value.name
-
-                if (url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()) {
-                    return
-                }
-
-                val item = Item(
-                    url = url,
-                    password = password,
-                    login = login,
-                    name = name
-                )
-
                 viewModelScope.launch {
-                    dao.upsertItem(item)
-                }
+                    val url = state.value.url
+                    val login = state.value.login
+                    val password = state.value.password
+                    val name = state.value.name
+                    val logoUrl = getFaviconUrl(url)
+                    if (url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()) {
+                        return@launch
+                    }
 
-                _state.update {
-                    it.copy(
-                        isAddingItem = false,
-                        url = "",
-                        login = "",
-                        password = "",
-                        name = ""
+                    val item = Item(
+                        url = url,
+                        password = password,
+                        login = login,
+                        name = name,
+                        logoUrl = logoUrl
                     )
+
+                    dao.upsertItem(item)
+
+                    _state.update {
+                        it.copy(
+                            isAddingItem = false,
+                            url = "",
+                            login = "",
+                            password = "",
+                            name = "",
+                            logoUrl = ""
+                        )
+                    }
                 }
             }
 

@@ -7,6 +7,7 @@ data class ItemState(
     val item: Item? = null,
     val id: Int = 0,
     val url: String = "",
+    val logoUrl: String = "",
     val name: String = "",
     val login: String = "",
     val password: String = "",

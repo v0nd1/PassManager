@@ -2,7 +2,6 @@ package com.vondi.passmanager.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.UUID
 
 @Entity
 data class Item(
@@ -12,4 +11,5 @@ data class Item(
     val url: String,
     val login: String,
     val password: String,
+    val logoUrl: String = ""
 )

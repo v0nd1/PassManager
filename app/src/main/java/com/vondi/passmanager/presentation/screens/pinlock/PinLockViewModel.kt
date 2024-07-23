@@ -59,14 +59,12 @@ class PinLockViewModel(
                                     error = ErrorPin.SUCCESS
                                 )
                             }
-                            Log.d("PinLock", "Here ${_state.value.error}")
                         } else {
                             _state.update {
                                 it.copy(
                                     error = ErrorPin.INCORRECT_PASS
                                 )
                             }
-                            Log.d("PinLock", "Here ${currentState.error}")
 
                             onEvent(PinLockEvent.ClearPin)
                         }
@@ -78,7 +76,6 @@ class PinLockViewModel(
                                     error = ErrorPin.TRY_PIN
                                 )
                             }
-                            Log.d("PinLock", "Here ${currentState.error}")
                             onEvent(PinLockEvent.ClearPin)
                         } else {
                             if (currentState.inputPin == currentState.confirmPin) {
@@ -88,10 +85,8 @@ class PinLockViewModel(
                                     error = ErrorPin.SUCCESS,
                                     confirmPin = null
                                 )
-                                Log.d("PinLock", "Here ${currentState.error}")
                             } else {
                                 _state.value = currentState.copy(error = ErrorPin.INCORRECT_PASS, confirmPin = null)
-                                Log.d("PinLock", "Here ${currentState.error}")
                                 onEvent(PinLockEvent.ClearPin)
                             }
                         }
@@ -100,9 +95,6 @@ class PinLockViewModel(
                     _state.value = currentState.copy(error = ErrorPin.NOT_ENOUGH_DIG)
                     onEvent(PinLockEvent.ClearPin)
                 }
-                Log.d("PinLock", "ConfPin = ${currentState.confirmPin} " +
-                        "InpPin = ${currentState.inputPin} IsAuth = ${currentState.isAuthenticated} " +
-                        "Error = ${_state.value.error}")
             }
         }
     }
