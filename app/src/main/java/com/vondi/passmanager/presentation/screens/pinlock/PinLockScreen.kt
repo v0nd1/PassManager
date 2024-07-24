@@ -2,6 +2,7 @@ package com.vondi.passmanager.presentation.screens.pinlock
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,15 +20,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
@@ -114,7 +118,7 @@ private fun Keyboard(
         listKeys.forEach { rows ->
             Row {
                 rows.forEach {
-                    PinKeyItem(
+                    KeyButton(
                         onClick = {
                             when (it) {
                                 "del" -> if (statePin.inputPin.isNotEmpty()) onEvent(PinLockEvent.DeleteDigit)
@@ -179,27 +183,25 @@ private fun PinDot(isFilled: Boolean) {
 }
 
 @Composable
-private fun PinKeyItem(
+private fun KeyButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.padding(8.dp),
     shape: Shape = RoundedCornerShape(100),
-    backgroundColor: Color = MaterialTheme.colorScheme.tertiary,
-    contentColor: Color = Color.Black,
-    elevation: Dp = 4.dp,
     content: @Composable () -> Unit
 ) {
-    Surface(
-        modifier = modifier,
-        shape = shape,
-        color = backgroundColor,
-        contentColor = contentColor,
-        tonalElevation = elevation,
-        onClick = onClick
+    Box(
+        modifier = Modifier
+            .padding(8.dp)
+            .clip(shape)
+            .background(
+                color = MaterialTheme.colorScheme.tertiary,
+                shape = RoundedCornerShape(100)
+            )
+            .clickable(onClick = onClick)
+            .defaultMinSize(minWidth = 95.dp, minHeight = 95.dp)
+            .padding(4.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = Modifier.defaultMinSize(minWidth = 95.dp, minHeight = 95.dp),
-            contentAlignment = Alignment.Center
-        ) {
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.secondary) {
             content()
         }
     }
