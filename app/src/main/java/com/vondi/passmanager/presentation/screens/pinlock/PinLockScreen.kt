@@ -53,7 +53,7 @@ fun PinLockScreen(
     viewModel: PinLockViewModel
 ) {
     val statePin by viewModel.state.collectAsState()
-    LaunchedEffect(statePin.error) {
+    LaunchedEffect(statePin.isAuthenticated, statePin.error) {
         if (statePin.isAuthenticated && statePin.error == ErrorPin.SUCCESS) {
             navController.popBackStack()
             navController.navigate("mainScreen")
