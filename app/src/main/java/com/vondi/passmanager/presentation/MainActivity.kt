@@ -8,9 +8,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.vondi.passmanager.data.network.PasswordDb
 import com.vondi.passmanager.data.util.KeystoreManager
 import com.vondi.passmanager.presentation.screens.item.ItemScreen
@@ -18,49 +20,32 @@ import com.vondi.passmanager.presentation.screens.item.ItemViewModel
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockScreen
 import com.vondi.passmanager.presentation.screens.pinlock.PinLockViewModel
 import com.vondi.passmanager.ui.theme.PassManagerTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val keystoreManager: KeystoreManager by lazy {
-        KeystoreManager(applicationContext)
-    }
+    private val viewModelItem: ItemViewModel by viewModels()
+    private val pinLockViewModel: PinLockViewModel by viewModels()
 
-    private val db by lazy {
-        PasswordDb.getInstance(applicationContext)
-    }
-
-    private val viewModelItem by viewModels<ItemViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return ItemViewModel(db.dao) as T
-            }
-        }
-    })
-
-    private val viewModelPinLock by viewModels<PinLockViewModel>(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return PinLockViewModel(keystoreManager) as T
-            }
-        }
-    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             PassManagerTheme {
-                val stateItem by viewModelItem.state.collectAsState()
+                val state by viewModelItem.state.collectAsState()
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "auth") {
                     composable("auth") {
                         PinLockScreen(
                             navController = navController,
-                            viewModel = viewModelPinLock
+                            viewModel = pinLockViewModel
                         )
                     }
                     composable("mainScreen") {
-                        ItemScreen(stateItem = stateItem, onEvent = viewModelItem::onEvent)
+                        ItemScreen(stateItem = state, onEvent = viewModelItem::onEvent)
                     }
 
                 }

@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.vondi.passmanager.data.util.KeystoreManager
 import com.vondi.passmanager.domain.event.PinLockEvent
 import com.vondi.passmanager.domain.model.pinlock.PinLockState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class PinLockViewModel(
+@HiltViewModel
+class PinLockViewModel @Inject constructor (
     private val keystoreManager: KeystoreManager
 ) : ViewModel() {
 

@@ -11,7 +11,8 @@ import com.vondi.passmanager.data.dao.ItemDao
 
 @Database(
     entities = [Item::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class PasswordDb : RoomDatabase() {
 

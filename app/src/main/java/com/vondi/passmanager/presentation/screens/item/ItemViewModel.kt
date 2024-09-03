@@ -8,14 +8,17 @@ import com.vondi.passmanager.data.dao.ItemDao
 import com.vondi.passmanager.data.util.getFaviconUrl
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ItemViewModel(
+@HiltViewModel
+class ItemViewModel @Inject constructor (
     private val dao: ItemDao
 ) : ViewModel() {
 
