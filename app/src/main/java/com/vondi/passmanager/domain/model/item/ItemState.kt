@@ -4,7 +4,7 @@ import com.vondi.passmanager.data.models.Item
 
 data class ItemState(
     val items: List<Item> = emptyList(),
-    val item: Item? = null,
+    val item: Item = Item.emptyItem(),
     val id: Int = 0,
     val url: String = "",
     val logoUrl: String = "",

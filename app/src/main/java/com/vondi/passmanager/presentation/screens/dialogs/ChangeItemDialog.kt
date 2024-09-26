@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.vondi.passmanager.R
@@ -30,8 +31,6 @@ fun ChangeItemDialog(
     modifier: Modifier = Modifier,
     item: Item
 ) {
-    onEvent(ItemEvent.SetId(item.id))
-    onEvent(ItemEvent.SetItem(item))
     AlertDialog(
         confirmButton = {
             Box(
@@ -42,7 +41,7 @@ fun ChangeItemDialog(
                     onEvent(ItemEvent.SaveChangedItem)
 
                 }) {
-                    Text(text = "Сохранить")
+                    Text(text = stringResource(R.string.save))
                 }
             }
         },
@@ -50,7 +49,7 @@ fun ChangeItemDialog(
         onDismissRequest = {
             onEvent(ItemEvent.HideDialogChange)
         },
-        title = { Text(text = "Изменить") },
+        title = { Text(text = stringResource(R.string.change)) },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -68,7 +67,7 @@ fun ChangeItemDialog(
                         IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.name)) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clipboard),
-                                contentDescription = "Скопировать",
+                                contentDescription = stringResource(R.string.copy),
                                 modifier = Modifier.size(30.dp)
                             )
                         }
@@ -87,7 +86,7 @@ fun ChangeItemDialog(
                         IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.url)) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clipboard),
-                                contentDescription = "Скопировать",
+                                contentDescription = stringResource(R.string.copy),
                                 modifier = Modifier.size(30.dp)
                             )
                         }
@@ -106,7 +105,7 @@ fun ChangeItemDialog(
                         IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.login)) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clipboard),
-                                contentDescription = "Скопировать",
+                                contentDescription = stringResource(R.string.copy),
                                 modifier = Modifier.size(30.dp)
                             )
                         }
@@ -125,7 +124,7 @@ fun ChangeItemDialog(
                         IconButton(onClick = { clipboardManager.setText(AnnotatedString(item.password)) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clipboard),
-                                contentDescription = "Скопировать",
+                                contentDescription = stringResource(R.string.copy),
                                 modifier = Modifier.size(30.dp)
                             )
                         }
@@ -136,3 +135,5 @@ fun ChangeItemDialog(
         }
     )
 }
+
+

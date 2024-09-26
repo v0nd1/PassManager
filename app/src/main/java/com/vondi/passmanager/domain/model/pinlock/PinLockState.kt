@@ -1,6 +1,6 @@
 package com.vondi.passmanager.domain.model.pinlock
 
-import com.vondi.passmanager.presentation.screens.pinlock.ErrorPin
+import com.vondi.passmanager.presentation.viewmodels.ErrorPin
 
 data class PinLockState(
     val isAuthenticated: Boolean = false,

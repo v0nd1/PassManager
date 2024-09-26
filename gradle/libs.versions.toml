@@ -13,16 +13,15 @@ hiltAndroidViewModel = "1.0.0-alpha03"
 hiltNavigationCompose = "1.2.0"
 lottieCompose = "5.0.1"
 materialIconsExtended = "1.6.8"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.0"
 roomRuntime = "2.6.1"
 securityCrypto = "1.1.0-alpha06"
 kapt = "2.0.20"
+serialization = "2.0.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltNavigationCompose" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-androidx-hilt-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltAndroidViewModel" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
@@ -52,4 +51,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 jetpack-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin"}
+kotlin-serialization = { id = "plugin.serialization", version.ref = "serialization"}
 

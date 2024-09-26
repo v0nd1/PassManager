@@ -1,6 +1,5 @@
-package com.vondi.passmanager.presentation.screens.pinlock
+package com.vondi.passmanager.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.vondi.passmanager.data.util.KeystoreManager
 import com.vondi.passmanager.domain.event.PinLockEvent

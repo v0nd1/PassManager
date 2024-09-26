@@ -1,6 +1,5 @@
-package com.vondi.passmanager.presentation.screens.pinlock
+package com.vondi.passmanager.presentation.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -22,7 +21,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -37,15 +35,16 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.vondi.passmanager.R
 import com.vondi.passmanager.domain.event.PinLockEvent
 import com.vondi.passmanager.domain.model.pinlock.PinLockState
+import com.vondi.passmanager.presentation.navigation.Screen
+import com.vondi.passmanager.presentation.viewmodels.ErrorPin
+import com.vondi.passmanager.presentation.viewmodels.PinLockViewModel
 import com.vondi.passmanager.ui.theme.White
-import kotlin.math.log
 
 @Composable
 fun PinLockScreen(
@@ -56,7 +55,7 @@ fun PinLockScreen(
     LaunchedEffect(statePin.isAuthenticated, statePin.error) {
         if (statePin.isAuthenticated && statePin.error == ErrorPin.SUCCESS) {
             navController.popBackStack()
-            navController.navigate("mainScreen")
+            navController.navigate(Screen.Item.route)
         }
     }
     Keyboard(

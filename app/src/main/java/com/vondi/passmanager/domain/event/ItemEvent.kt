@@ -7,7 +7,7 @@ sealed interface ItemEvent {
     data object SaveItem : ItemEvent
     data object SaveChangedItem : ItemEvent
     data object ShowDialogAdd : ItemEvent
-    data object ShowDialogChange : ItemEvent
+    data class ShowDialogChange(val item: Item) : ItemEvent
     data object HideDialogAdd : ItemEvent
     data object HideDialogChange : ItemEvent
 

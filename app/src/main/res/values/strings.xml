@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PassSafe</string>
+    <string name="add">Добавить</string>
+    <string name="noone_passwords">Пароли отсутствуют</string>
+    <string name="save">Сохранить</string>
+    <string name="change">Изменить</string>
+    <string name="copy">Скопировать</string>
 </resources>

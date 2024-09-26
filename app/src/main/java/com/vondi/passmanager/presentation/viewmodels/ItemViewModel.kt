@@ -1,6 +1,5 @@
-package com.vondi.passmanager.presentation.screens.item
+package com.vondi.passmanager.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vondi.passmanager.data.models.Item
@@ -93,7 +92,7 @@ class ItemViewModel @Inject constructor (
             }
 
             ItemEvent.SaveChangedItem -> {
-                val id = state.value.id
+                val id = state.value.item.id
                 val url = state.value.url
                 val login = state.value.login
                 val password = state.value.password
@@ -101,7 +100,7 @@ class ItemViewModel @Inject constructor (
 
                 val currentItem = state.value.item
 
-                val newItem = currentItem?.copy(
+                val newItem = currentItem.copy(
                     id = id,
                     url = url.ifBlank { currentItem.url },
                     login = login.ifBlank { currentItem.login },
@@ -110,7 +109,7 @@ class ItemViewModel @Inject constructor (
                 )
 
                 viewModelScope.launch {
-                    newItem?.let { dao.updateItem(it) }
+                    newItem.let { dao.updateItem(it) }
                 }
 
                 _state.update {
@@ -180,10 +179,11 @@ class ItemViewModel @Inject constructor (
                 }
             }
 
-            ItemEvent.ShowDialogChange -> {
+            is ItemEvent.ShowDialogChange -> {
                 _state.update {
                     it.copy(
-                        isChangeItem = true
+                        isChangeItem = true,
+                        item = event.item
                     )
                 }
             }

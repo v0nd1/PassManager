@@ -1,4 +1,4 @@
-package com.vondi.passmanager.presentation.screens.item
+package com.vondi.passmanager.presentation.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.vondi.passmanager.R
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
 import com.vondi.passmanager.presentation.components.ItemCard
@@ -32,7 +34,7 @@ fun ItemScreen(
                 containerColor = MaterialTheme.colorScheme.tertiary,
                 contentColor = White
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add))
             }
         }
 
@@ -56,13 +58,13 @@ fun ItemScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (stateItem.items.isEmpty()) {
-                item { Text(text = "Пароли отсутствуют") }
+                item { Text(text = stringResource(R.string.noone_passwords)) }
             }
             items(stateItem.items) { item ->
                 ItemCard(
                     item = item,
                     onDelete = { onEvent(ItemEvent.DeleteItem(item)) },
-                    onClick = { onEvent(ItemEvent.ShowDialogChange) },
+                    onClick = { onEvent(ItemEvent.ShowDialogChange(item)) },
                     onSelect = { selected -> onEvent(ItemEvent.EditItem(selected)) }
                 )
             }
