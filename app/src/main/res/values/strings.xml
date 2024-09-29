@@ -5,4 +5,6 @@
     <string name="save">Сохранить</string>
     <string name="change">Изменить</string>
     <string name="copy">Скопировать</string>
+    <string name="dropdownmenu">DropDownMenu</string>
+    <string name="selected_category">Selected category</string>
 </resources>

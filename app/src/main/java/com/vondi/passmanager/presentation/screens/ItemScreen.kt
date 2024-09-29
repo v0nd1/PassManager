@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import com.vondi.passmanager.R
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
+import com.vondi.passmanager.presentation.components.CategoryList
 import com.vondi.passmanager.presentation.components.ItemCard
 import com.vondi.passmanager.presentation.components.PassNavBar
 import com.vondi.passmanager.presentation.screens.dialogs.AddItemDialog
@@ -54,7 +55,7 @@ fun ItemScreen(
                 title = { /*TODO*/ },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 navigationIcon = {
-
+                    CategoryList()
                 }
             )
         }
@@ -79,7 +80,7 @@ fun ItemScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (stateItem.items.isEmpty()) {
-                item { Text(text = stringResource(R.string.noone_passwords)) }
+                //item { Text(text = stringResource(R.string.noone_passwords)) }
             }
             items(stateItem.items) { item ->
                 ItemCard(
