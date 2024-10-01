@@ -7,4 +7,5 @@
     <string name="copy">Скопировать</string>
     <string name="dropdownmenu">DropDownMenu</string>
     <string name="selected_category">Selected category</string>
+    <string name="search_icon">Search Icon</string>
 </resources>

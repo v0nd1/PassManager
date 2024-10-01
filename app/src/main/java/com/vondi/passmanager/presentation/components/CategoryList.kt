@@ -3,6 +3,8 @@ package com.vondi.passmanager.presentation.components
 import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -47,6 +53,7 @@ import com.vondi.passmanager.presentation.common.Primary
 import com.vondi.passmanager.presentation.common.Size
 import com.vondi.passmanager.presentation.common.Tertiary
 import com.vondi.passmanager.presentation.common.TextColor
+import com.vondi.passmanager.ui.theme.LightGreen
 
 
 sealed class Category(
@@ -58,7 +65,11 @@ sealed class Category(
             return listOf(
                 Sites,
                 Accounts,
-                Browsers
+                Browsers,
+                Games,
+                Work,
+                Ide,
+                Group
             )
         }
     }
@@ -76,90 +87,67 @@ sealed class Category(
         name = "Browsers",
         selected = false
     )
+
+
+    data object Games: Category(
+        name = "Games",
+        selected = false
+    )
+
+    data object Ide: Category(
+        name = "Ide",
+        selected = false
+    )
+
+    data object Group: Category(
+        name = "Group",
+        selected = false
+    )
+
+    data object Work: Category(
+        name = "Work",
+        selected = false
+    )
+
+}
+
+@Composable
+private fun CategoryButton(
+    category: Category
+) {
+    Box(
+        modifier = Modifier
+            .padding(Dimens.Small)
+            .wrapContentWidth()
+            .clip(RoundedCornerShape(50))
+            .background(Tertiary)
+
+    ) {
+        Text(
+            text = category.name,
+            color = TextColor,
+            fontSize = FontSize.SmallMedium,
+            modifier = Modifier
+                .padding(Dimens.Small)
+        )
+    }
 }
 
 @Composable
 fun CategoryList(
     categories: List<Category> = Category.allCategories()
 ) {
-    var expanded by remember { mutableStateOf(false) }
 
-    Box(
+    LazyRow(
         modifier = Modifier
-            .padding(start = Dimens.Small)
-            .width(200.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(20))
-            .background(Tertiary)
-            .clickable { expanded = true }
-
-    ){
-        Column {
-            Row(
-                Modifier
-                    .fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                categories.forEach{
-                    if (it.selected) {
-                        Text(
-                            text = it.name,
-                            fontSize = FontSize.SmallMedium,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(start = Dimens.Small)
-                        )
-                    }
-                }
-
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = stringResource(R.string.dropdownmenu),
-                    modifier = Modifier
-                        .size(Size.Medium)
-                        .padding(end = Dimens.Small),
-                    tint = TextColor
-                )
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .width(200.dp)
-                    .wrapContentHeight()
-                    .background(Tertiary)
-
-
-            ) {
-                categories.forEach {
-                    DropdownMenuItem(
-                        onClick = { },
-                        text = {
-                            Text(
-                                text = it.name,
-                                color = TextColor,
-                                fontSize = FontSize.SmallMedium
-                            )
-                        },
-                        trailingIcon = {
-                            if (it.selected) {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = stringResource(R.string.selected_category)
-                                )
-                            }
-
-                        }
-                    )
-                }
-            }
+            .fillMaxWidth(),
+    ) {
+        item {
+            Spacer(Modifier.width(Dimens.Small))
         }
-
-
-
+        items(categories) {
+            CategoryButton(it)
+        }
     }
 
 }

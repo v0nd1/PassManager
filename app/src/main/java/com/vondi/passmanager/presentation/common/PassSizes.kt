@@ -16,12 +16,14 @@ object Size {
     val Medium = 50.dp
     val Big = 100.dp
     val Large = 150.dp
+    val ExtraLarge = 200.dp
 }
 
 object Dimens {
     val Small = 10.dp
     val Medium = 20.dp
     val ExtraMedium = 30.dp
-    val Big = 50.dp
+    val Big = 40.dp
+    val Large = 50.dp
 }
 

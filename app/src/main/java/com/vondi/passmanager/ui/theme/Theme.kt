@@ -35,7 +35,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun PassManagerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    //dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
