@@ -41,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -113,22 +114,27 @@ sealed class Category(
 
 @Composable
 private fun CategoryButton(
-    category: Category
+    category: Category,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .padding(Dimens.Small)
             .wrapContentWidth()
             .clip(RoundedCornerShape(50))
-            .background(Tertiary)
+            .background(if (category.selected) Container else Tertiary)
+            .clickable(
+                enabled = !category.selected,
+                onClick = { if (!category.selected) onClick() }
+            )
 
     ) {
         Text(
             text = category.name,
-            color = TextColor,
+            color = if (category.selected) Gray else TextColor,
             fontSize = FontSize.SmallMedium,
             modifier = Modifier
-                .padding(Dimens.Small)
+                .padding(horizontal = Dimens.Small, vertical = Dimens.ExtraSmall)
         )
     }
 }
@@ -146,7 +152,9 @@ fun CategoryList(
             Spacer(Modifier.width(Dimens.Small))
         }
         items(categories) {
-            CategoryButton(it)
+            CategoryButton(it) {
+
+            }
         }
     }
 
