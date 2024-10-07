@@ -8,4 +8,5 @@
     <string name="dropdownmenu">DropDownMenu</string>
     <string name="selected_category">Selected category</string>
     <string name="search_icon">Search Icon</string>
+    <string name="back_to_item_screen">Back to item screen</string>
 </resources>

@@ -5,15 +5,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-val Primary: Color
+val PrimaryColor: Color
     @Composable
     get() = MaterialTheme.colorScheme.primary
 
-val Secondary: Color
+val SecondaryColor: Color
     @Composable
     get() = MaterialTheme.colorScheme.secondary
 
-val Background: Color
+val BackgroundColor: Color
     @Composable
     get() = MaterialTheme.colorScheme.background
 
@@ -28,3 +28,7 @@ val Container: Color
 val TextColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color.White else Color.Black
+
+val ErrorColor: Color
+    @Composable
+    get() = MaterialTheme.colorScheme.error

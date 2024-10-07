@@ -29,13 +29,14 @@ import com.vondi.passmanager.presentation.common.Size
 fun PassSearchBar(
 
 ) {
-
     val maxLines = 1
     var text by remember { mutableStateOf("") }
     OutlinedTextField(
         value = text,
         onValueChange = {
-            text = it
+            text = it.filter {
+                it.isLetterOrDigit()
+            }
         },
         modifier = Modifier
             .padding(horizontal = Dimens.Medium)

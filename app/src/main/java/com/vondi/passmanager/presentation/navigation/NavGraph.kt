@@ -40,21 +40,5 @@ fun NavGraph(
             )
         }
 
-        composable(route = Screen.AddItem.route) {
-            AddItemScreen(
-                state = state,
-                onEvent = onEvent,
-                navController = navController
-            )
-        }
-
-        composable(route = Screen.ChangeItem.route) {
-            ChangeItemScreen(
-                state = state,
-                onEvent = onEvent,
-                navController = navController
-            )
-        }
-
     }
 }

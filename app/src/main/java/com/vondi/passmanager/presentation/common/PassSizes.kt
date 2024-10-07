@@ -26,5 +26,7 @@ object Dimens {
     val ExtraMedium = 30.dp
     val Big = 40.dp
     val Large = 50.dp
+    val ExtraLarge = 100.dp
+    val ExtraLarge2 = 120.dp
 }
 

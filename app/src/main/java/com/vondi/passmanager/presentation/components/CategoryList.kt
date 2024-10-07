@@ -50,7 +50,6 @@ import com.vondi.passmanager.R
 import com.vondi.passmanager.presentation.common.Container
 import com.vondi.passmanager.presentation.common.Dimens
 import com.vondi.passmanager.presentation.common.FontSize
-import com.vondi.passmanager.presentation.common.Primary
 import com.vondi.passmanager.presentation.common.Size
 import com.vondi.passmanager.presentation.common.Tertiary
 import com.vondi.passmanager.presentation.common.TextColor
