@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.vondi.passmanager.presentation.common.Tertiary
 import com.vondi.passmanager.presentation.common.TextColor
+import kotlin.math.max
 
 @Composable
 fun PassTextField(
@@ -31,7 +32,8 @@ fun PassTextField(
             unfocusedContainerColor = Tertiary,
             unfocusedTextColor = TextColor,
             focusedTextColor = TextColor
-        )
+        ),
+        maxLines = 1
     )
 
 }

@@ -39,6 +39,7 @@ import com.vondi.passmanager.presentation.common.FontSize
 import com.vondi.passmanager.presentation.common.Size
 import com.vondi.passmanager.presentation.components.PassButton
 import com.vondi.passmanager.presentation.components.PassSurface
+import com.vondi.passmanager.presentation.components.PassTextField
 
 @Composable
 fun AddItemScreen(
@@ -77,46 +78,38 @@ fun AddItemScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                TextField(
+                PassTextField(
                     value = state.name,
                     onValueChange = {
                         onEvent(ItemEvent.SetName(it))
                     },
-                    placeholder = {
-                        Text(text = "Наименование")
-                    },
-                    maxLines = 1
+                    placeholder = "Наименование"
                 )
-                TextField(
+
+                PassTextField(
                     value = state.url,
                     onValueChange = {
                         onEvent(ItemEvent.SetUrl(it))
                     },
-                    placeholder = {
-                        Text(text = "Ссылка")
-                    },
-                    maxLines = 1
+                    placeholder = "Ссылка"
                 )
-                TextField(
+
+                PassTextField(
                     value = state.login,
                     onValueChange = {
                         onEvent(ItemEvent.SetLogin(it))
                     },
-                    placeholder = {
-                        Text(text = "Логин")
-                    },
-                    maxLines = 1
+                    placeholder = "Логин"
                 )
-                TextField(
+
+                PassTextField(
                     value = state.password,
                     onValueChange = {
                         onEvent(ItemEvent.SetPassword(it))
                     },
-                    placeholder = {
-                        Text(text = "Пароль")
-                    },
-                    maxLines = 1
+                    placeholder = "Пароль"
                 )
+
             }
 
             Row(
@@ -160,7 +153,7 @@ private fun ColorPalitra(
                     .size(Size.Medium)
                     .border(width = 1.dp, shape = RoundedCornerShape(100), color = Color.White)
                     .clip(RoundedCornerShape(100))
-                    .clickable {  }
+                    .clickable { }
                     .background(color = it)
 
             )
