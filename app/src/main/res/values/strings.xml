@@ -9,4 +9,7 @@
     <string name="selected_category">Selected category</string>
     <string name="search_icon">Search Icon</string>
     <string name="back_to_item_screen">Back to item screen</string>
+    <string name="generatepass">GeneratePass</string>
+    <string name="autorenew">Autorenew</string>
+    <string name="add_new_field">Add new field</string>
 </resources>

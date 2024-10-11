@@ -1,5 +1,6 @@
 package com.vondi.passmanager.presentation.common
 
+import android.provider.MediaStore.Audio.Media
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -20,6 +21,7 @@ object Size {
 }
 
 object Dimens {
+    val Zero = 0.dp
     val ExtraSmall = 5.dp
     val Small = 10.dp
     val Medium = 20.dp
@@ -28,5 +30,20 @@ object Dimens {
     val Large = 50.dp
     val ExtraLarge = 100.dp
     val ExtraLarge2 = 120.dp
+}
+
+object Shape {
+    val None = 0
+    val Small = 20
+    val Medium = 50
+    val Big = 70
+    val Large = 85
+    val Full = 100
+}
+
+object Border {
+    val Default = 1.dp
+    val Bold = 2.dp
+    val ExtraBold = 3.dp
 }
 

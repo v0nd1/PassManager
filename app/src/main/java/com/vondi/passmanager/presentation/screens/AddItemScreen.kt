@@ -15,10 +15,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -27,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -36,8 +44,12 @@ import com.vondi.passmanager.domain.model.item.ItemState
 import com.vondi.passmanager.presentation.common.Dimens
 import com.vondi.passmanager.presentation.common.ErrorColor
 import com.vondi.passmanager.presentation.common.FontSize
+import com.vondi.passmanager.presentation.common.PrimaryColor
+import com.vondi.passmanager.presentation.common.Shape
 import com.vondi.passmanager.presentation.common.Size
+import com.vondi.passmanager.presentation.common.TextColor
 import com.vondi.passmanager.presentation.components.PassButton
+import com.vondi.passmanager.presentation.components.PassGeneration
 import com.vondi.passmanager.presentation.components.PassSurface
 import com.vondi.passmanager.presentation.components.PassTextField
 
@@ -53,28 +65,21 @@ fun AddItemScreen(
                 .fillMaxSize()
                 .padding(horizontal = Dimens.Medium, vertical = Dimens.Medium)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ){
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = stringResource(R.string.back_to_item_screen)
-                    )
-                }
-            }
-            Spacer(Modifier.height(Dimens.Medium))
+            Spacer(Modifier.height(Dimens.Big))
             Text(
                 text = "Создайте свою карточку",
                 fontSize = FontSize.Big
             )
-            Spacer(Modifier.height(Dimens.Small))
+            Spacer(Modifier.height(Dimens.Medium))
             ColorPalitra()
+            Spacer(Modifier.height(Dimens.Medium))
+            PassGeneration()
+            Spacer(Modifier.height(Dimens.Big))
+            Text(
+                text = "Введите данные",
+                fontSize = FontSize.Big
+            )
+            Spacer(Modifier.height(Dimens.Small))
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -112,24 +117,59 @@ fun AddItemScreen(
 
             }
 
-            Row(
+            Spacer(Modifier.height(Dimens.Small))
+            Button(
+                onClick = { },
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .height(Dimens.Big)
+                    .wrapContentWidth(),
+                shape = RoundedCornerShape(30),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = PrimaryColor,
+                    contentColor = TextColor
+                )
             ) {
-                PassButton(
-                    text = "Отмена",
-                    background = ErrorColor
-                ){
-
-                }
-
-                PassButton(
-                    text = "Создать"
-                ){
-
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Создать новое поле",
+                        color = TextColor
+                    )
+                    Spacer(Modifier.width(Dimens.Small))
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.add_new_field),
+                        tint = TextColor
+                    )
                 }
             }
+
+
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                PassButton(
+//                    background = ErrorColor,
+//                    onClick = {
+//                        navController.popBackStack()
+//                    }
+//                ){
+//                    Text(
+//                        text = "Отмена"
+//                    )
+//                }
+//
+//                PassButton(
+//                    onClick = { }
+//                ){
+//                    Text(
+//                        text = "Сохранить"
+//                    )
+//                }
+//            }
         }
     }
 
