@@ -1,6 +1,5 @@
 package com.vondi.passmanager.presentation.navigation
 
-import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,10 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.vondi.passmanager.domain.event.ItemEvent
 import com.vondi.passmanager.domain.model.item.ItemState
 import com.vondi.passmanager.presentation.screens.AddItemScreen
-import com.vondi.passmanager.presentation.screens.ChangeItemScreen
 import com.vondi.passmanager.presentation.screens.ItemScreen
 import com.vondi.passmanager.presentation.screens.PinLockScreen
-import com.vondi.passmanager.presentation.viewmodels.ItemViewModel
 import com.vondi.passmanager.presentation.viewmodels.PinLockViewModel
 
 @Composable
@@ -35,7 +32,16 @@ fun NavGraph(
 
         composable(route = Screen.Item.route) {
             ItemScreen(
+                navController = navController,
                 stateItem = state,
+                onEvent = onEvent
+            )
+        }
+
+        composable(route = Screen.AddItem.route) {
+            AddItemScreen(
+                navController = navController,
+                state = state,
                 onEvent = onEvent
             )
         }

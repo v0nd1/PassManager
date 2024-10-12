@@ -28,16 +28,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             PassManagerTheme {
                 val state by viewModelItem.state.collectAsState()
-                AddItemScreen(
+                NavGraph(
+                    pinLockViewModel = pinLockViewModel,
                     onEvent = viewModelItem::onEvent,
-                    state = state,
-                    navController = rememberNavController()
+                    state = state
                 )
-//                NavGraph(
-//                    pinLockViewModel = pinLockViewModel,
-//                    onEvent = viewModelItem::onEvent,
-//                    state = state
-//                )
 
             }
         }

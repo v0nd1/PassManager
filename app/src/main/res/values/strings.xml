@@ -12,4 +12,8 @@
     <string name="generatepass">GeneratePass</string>
     <string name="autorenew">Autorenew</string>
     <string name="add_new_field">Add new field</string>
+    <string name="create">Create</string>
+    <string name="settings_generation">Settings generation</string>
+    <string name="categorylist">CategoryList</string>
+    <string name="generate_pass">Generate Pass</string>
 </resources>

@@ -1,8 +1,12 @@
 package com.vondi.passmanager.presentation.components
 
 import android.widget.CheckBox
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +23,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -61,92 +67,77 @@ fun PassGeneration(
     var checked1  by remember { mutableStateOf(true) }
     var checked2 by remember { mutableStateOf(true) }
     var checked3 by remember { mutableStateOf(true) }
+    var isParametersVisible by remember { mutableStateOf(false) }
 
     Column {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { isParametersVisible = !isParametersVisible },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Генерация пароля",
-                color = TextColor,
-                fontSize = FontSize.SmallMedium,
-                fontWeight = FontWeight.Bold
-            )
             Row {
-
-                IconButton(
-                    onClick = { }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = stringResource(R.string.generatepass),
-                        tint = PrimaryColor
-                    )
-                }
-                IconButton(
-                    onClick = {
-
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Autorenew,
-                        contentDescription = stringResource(R.string.autorenew),
-                        tint = PrimaryColor
-                    )
-                }
-            }
-
-        }
-
-
-        Column {
-            Slider(
-                value = sliderPosition,
-                onValueChange = { newValue ->
-                    sliderPosition = newValue
-                },
-                valueRange = rangeSlider,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                colors = SliderDefaults.colors(
-                    disabledThumbColor = PrimaryColor
+                Text(
+                    text = "Параметры генерации",
+                    color = PrimaryColor,
+                    fontSize = FontSize.SmallMedium
                 )
-            )
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(1){
-                    GenCheckBox(
-                        text = "С буквами",
-                        checked = checked1
-                    ) {
-                        checked1 = it
-                    }
-                    Spacer(modifier = Modifier.width(Dimens.Small))
-                    GenCheckBox(
-                        text = "С цифрами",
-                        checked = checked2
-                    ) {
-                        checked2 = it
-                    }
-                    Spacer(modifier = Modifier.width(Dimens.Small))
-                    GenCheckBox(
-                        text = "С символами",
-                        checked = checked3
-                    ) {
-                        checked3 = it
-                    }
-                }
+
 
             }
-
-
-
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowDown,
+                contentDescription = stringResource(R.string.settings_generation),
+                tint = PrimaryColor
+            )
         }
 
+        AnimatedVisibility(
+            visible = isParametersVisible,
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
+            Column {
+                Slider(
+                    value = sliderPosition,
+                    onValueChange = { newValue -> sliderPosition = newValue },
+                    valueRange = rangeSlider,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = SliderDefaults.colors(disabledThumbColor = PrimaryColor)
+                )
 
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.Small)
+                ) {
+                    item {
+                        GenCheckBox(
+                            text = "С буквами",
+                            checked = checked1
+                        ) {
+                            checked1 = it
+                        }
+                    }
+                    item {
+                        GenCheckBox(
+                            text = "С цифрами",
+                            checked = checked2
+                        ) {
+                            checked2 = it
+                        }
+                    }
+                    item {
+                        GenCheckBox(
+                            text = "С символами",
+                            checked = checked3
+                        ) {
+                            checked3 = it
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
