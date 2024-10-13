@@ -17,6 +17,7 @@ sealed interface ItemEvent {
     data class SetName(val name: String) : ItemEvent
     data class SetLogin(val login: String) : ItemEvent
     data class SetPassword(val password: String) : ItemEvent
+    data class SetCategory(val category: String) : ItemEvent
     data class DeleteItem(val item: Item) : ItemEvent
     data class EditItem(val item: Item) : ItemEvent
 

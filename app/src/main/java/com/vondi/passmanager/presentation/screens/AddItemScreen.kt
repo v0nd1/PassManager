@@ -1,5 +1,6 @@
 package com.vondi.passmanager.presentation.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -43,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -72,6 +74,7 @@ fun AddItemScreen(
 ) {
 
     val verticalScroll = rememberScrollState()
+    val context = LocalContext.current
     PassSurface {
         Column(
             modifier = Modifier
@@ -84,7 +87,7 @@ fun AddItemScreen(
                 text = "Создайте новую\nкарточку",
                 fontSize = FontSize.Big
             )
-            
+
             Spacer(Modifier.height(Dimens.Medium))
             Text(
                 text = "Введите данные",
@@ -97,7 +100,7 @@ fun AddItemScreen(
                 CategoryField(
                     value = state.category,
                     onValueChange = {
-                        //onEvent(ItemEvent.SetPassword(it))
+                        onEvent(ItemEvent.SetCategory(it))
                     },
                     placeholder = "Категория"
                 )
@@ -158,14 +161,25 @@ fun AddItemScreen(
                     background = ErrorColor
                 ) {
                     Text(
-                        text = "Отмена",
+                        text = stringResource(R.string.cancel),
                         color = White
                     )
                 }
 
-                PassButton(onClick = { /*TODO*/ }) {
+                PassButton(onClick = {
+                    if (state.url.isBlank() || state.name.isBlank() || state.password.isBlank() || state.login.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.all_fields_mustbe),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        onEvent(ItemEvent.SaveItem)
+                        navController.popBackStack()
+                    }
+                }) {
                     Text(
-                        text = "Сохранить",
+                        text = stringResource(R.string.save_pass),
                         color = White
                     )
                 }

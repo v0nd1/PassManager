@@ -52,6 +52,7 @@ fun ItemCard(
             .data(item.logoUrl)
             .build()
     )
+    val category = item.category
     val painterDefault = painterResource(id = R.drawable.lock)
     Card(
         modifier = Modifier
@@ -107,6 +108,12 @@ fun ItemCard(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = item.url,
+                        fontSize = 14.sp,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = item.category,
                         fontSize = 14.sp,
                         fontStyle = FontStyle.Italic
                     )

@@ -1,5 +1,7 @@
 package com.vondi.passmanager.presentation.viewmodels
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vondi.passmanager.data.models.Item
@@ -29,6 +31,9 @@ class ItemViewModel @Inject constructor (
             items = items
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ItemState())
+
+    val categories: MutableState<List<String>> = mutableStateOf(listOf("Все"))
+    val selectedCategory: MutableState<String> = mutableStateOf("Все")
 
     fun onEvent(
         event: ItemEvent
@@ -64,7 +69,8 @@ class ItemViewModel @Inject constructor (
                     val password = state.value.password
                     val name = state.value.name
                     val logoUrl = getFaviconUrl(url)
-                    if (url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank()) {
+                    val category = state.value.category
+                    if (url.isBlank() || login.isBlank() || password.isBlank() || name.isBlank() || category.isBlank()) {
                         return@launch
                     }
 
@@ -73,7 +79,8 @@ class ItemViewModel @Inject constructor (
                         password = password,
                         login = login,
                         name = name,
-                        logoUrl = logoUrl
+                        logoUrl = logoUrl,
+                        category = category
                     )
 
                     dao.upsertItem(item)
@@ -85,7 +92,8 @@ class ItemViewModel @Inject constructor (
                             login = "",
                             password = "",
                             name = "",
-                            logoUrl = ""
+                            logoUrl = "",
+                            category = ""
                         )
                     }
                 }
@@ -151,6 +159,14 @@ class ItemViewModel @Inject constructor (
                 _state.update {
                     it.copy(
                         password = event.password
+                    )
+                }
+            }
+
+            is ItemEvent.SetCategory -> {
+                _state.update {
+                    it.copy(
+                        category = event.category
                     )
                 }
             }
