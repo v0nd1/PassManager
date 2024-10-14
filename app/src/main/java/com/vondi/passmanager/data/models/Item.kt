@@ -11,5 +11,13 @@ data class Item(
     val url: String,
     val login: String,
     val password: String,
+    val category: String,
+    val color: Int,
     val logoUrl: String = ""
-)
+){
+    companion object {
+        fun emptyItem() : Item {
+            return Item(0, "", "", "", "", "", 0)
+        }
+    }
+}

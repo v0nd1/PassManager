@@ -22,4 +22,10 @@ interface ItemDao {
     @Query("SELECT * FROM item")
     fun getItems(): Flow<List<Item>>
 
+    @Query("SELECT * FROM item WHERE category = :category ORDER BY category")
+    fun getItemsByCategory(category: String): Flow<List<Item>>
+
+    @Query("SELECT DISTINCT category FROM Item")
+    fun getCategories(): Flow<List<String>>
+
 }
