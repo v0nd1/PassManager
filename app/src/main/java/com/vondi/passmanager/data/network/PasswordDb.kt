@@ -18,19 +18,4 @@ abstract class PasswordDb : RoomDatabase() {
 
     abstract val dao: ItemDao
 
-    companion object {
-        private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE Item ADD COLUMN logoUrl TEXT DEFAULT '' NOT NULL")
-            }
-        }
-
-        fun getInstance(context: Context): PasswordDb {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                PasswordDb::class.java,
-                "password_db"
-            ).addMigrations(MIGRATION_1_2).build()
-        }
-    }
 }

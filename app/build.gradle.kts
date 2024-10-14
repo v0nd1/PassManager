@@ -21,6 +21,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        ndk {
+            abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a"))
+        }
     }
 
     buildTypes {
@@ -95,8 +98,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
     // Jsoup
-    implementation("org.jsoup:jsoup:1.13.1")
+    implementation(libs.jsoup)
 }

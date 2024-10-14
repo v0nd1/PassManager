@@ -19,7 +19,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesDb(@ApplicationContext context: Context) : PasswordDb = Room.databaseBuilder(
-        context, PasswordDb::class.java, "password.db"
+        context, PasswordDb::class.java, "passwords.db"
     ).build()
 
     @Provides

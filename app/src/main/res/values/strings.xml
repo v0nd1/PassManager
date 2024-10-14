@@ -19,4 +19,7 @@
     <string name="save_pass">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="all_fields_mustbe">Все поля должны быть заполенены</string>
+    <string name="all_category">Все</string>
+    <string name="iconsite">Iconsite</string>
+    <string name="clear_query">Clear query</string>
 </resources>

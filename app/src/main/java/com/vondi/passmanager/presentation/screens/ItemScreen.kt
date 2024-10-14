@@ -24,7 +24,6 @@ import com.vondi.passmanager.presentation.components.CategoryList
 import com.vondi.passmanager.presentation.components.ItemCard
 import com.vondi.passmanager.presentation.components.PassSearchBar
 import com.vondi.passmanager.presentation.navigation.Screen
-import com.vondi.passmanager.presentation.screens.dialogs.AddItemDialog
 import com.vondi.passmanager.presentation.screens.dialogs.ChangeItemDialog
 import com.vondi.passmanager.ui.theme.White
 
@@ -47,17 +46,11 @@ fun ItemScreen(
             }
         },
         topBar = {
-            PassSearchBar()
+            PassSearchBar(onEvent)
         }
 
     ) {
 
-        if (stateItem.isAddingItem) {
-            AddItemDialog(
-                state = stateItem,
-                onEvent = onEvent
-            )
-        }
         if (stateItem.editingItem != null && stateItem.isChangeItem) {
             ChangeItemDialog(
                 state = stateItem,
@@ -74,7 +67,12 @@ fun ItemScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                CategoryList()
+                CategoryList(
+                    categories = stateItem.categories,
+                    currentCategory = stateItem.currentCategory
+                ) { category ->
+                    onEvent(ItemEvent.SetCurCategory(category))
+                }
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

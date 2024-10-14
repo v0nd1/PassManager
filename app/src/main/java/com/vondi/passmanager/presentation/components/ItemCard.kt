@@ -25,18 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.vondi.passmanager.R
 import com.vondi.passmanager.data.models.Item
+import com.vondi.passmanager.presentation.common.Dimens
+import com.vondi.passmanager.presentation.common.FontSize
+import com.vondi.passmanager.presentation.common.TextColor
 
 @Composable
 fun ItemCard(
@@ -52,7 +58,6 @@ fun ItemCard(
             .data(item.logoUrl)
             .build()
     )
-    val category = item.category
     val painterDefault = painterResource(id = R.drawable.lock)
     Card(
         modifier = Modifier
@@ -63,8 +68,8 @@ fun ItemCard(
                 onClick()
             },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.secondary
+            containerColor = Color(item.color),
+            contentColor = TextColor
         )
     ) {
         Row(
@@ -78,7 +83,7 @@ fun ItemCard(
             ) {
                 Image(
                     painter = if (painter.request.data == "") painterDefault else painter,
-                    contentDescription = "Iconsite",
+                    contentDescription = stringResource(R.string.iconsite),
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(60))
@@ -87,12 +92,24 @@ fun ItemCard(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Column {
-                    Text(
-                        text = item.name,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Text(
+                            text = item.name,
+                            fontSize = FontSize.Medium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.width(Dimens.ExtraSmall))
+                        Text(
+                            text = item.category,
+                            fontSize = FontSize.ExtraSmall,
+                            fontStyle = FontStyle.Italic
+                        )
+                    }
+                    
                     Text(
                         text = "Login: $login",
                         fontSize = 14.sp,
@@ -111,13 +128,6 @@ fun ItemCard(
                         fontSize = 14.sp,
                         fontStyle = FontStyle.Italic
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = item.category,
-                        fontSize = 14.sp,
-                        fontStyle = FontStyle.Italic
-                    )
-
                 }
             }
             IconButton(onClick = {
